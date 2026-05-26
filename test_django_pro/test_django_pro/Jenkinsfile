@@ -21,14 +21,16 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y docker.io
+                dir('test_django_pro') {
+                    sh '''
+                        apt-get update
+                        apt-get install -y docker.io
 
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
-                    pip install pytest pytest-django pytest-cov
-                '''
+                        pip install --upgrade pip
+                        pip install -r requirements.txt
+                        pip install pytest pytest-django pytest-cov
+                    '''
+                }
             }
         }
 
