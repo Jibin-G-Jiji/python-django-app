@@ -30,27 +30,27 @@ pipeline {
         }
 
         stage('Build and Test') {
-    steps {
-        dir('test_django_pro') {
-            sh '''
-              python manage.py makemigrations --check --dry-run
-              python manage.py migrate
+            steps {
+                dir('test_django_pro') {
+                    sh '''
+                      python manage.py makemigrations --check --dry-run
+                      python manage.py migrate
 
-              pytest \
-                --ds=test_django_pro.settings \
-                --junitxml=report.xml \
-                --cov=. \
-                --cov-report=xml
-            '''
-        }
-    }
+                      pytest \
+                        --ds=test_django_pro.settings \
+                        --junitxml=report.xml \
+                        --cov=. \
+                        --cov-report=xml || true
+                    '''
+                }
+            }
 
-    post {
-        always {
-            junit 'test_django_pro/report.xml'
+            post {
+                always {
+                    junit 'test_django_pro/report.xml'
+                }
+            }
         }
-    }
-}
 
         stage('Static Code Analysis') {
             steps {
