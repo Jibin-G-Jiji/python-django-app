@@ -64,8 +64,7 @@ pipeline {
                       -Dsonar.projectKey=django-app \
                       -Dsonar.sources=. \
                       -Dsonar.host.url=$SONAR_HOST_URL \
-                      -Dsonar.login=admin \
-                      -Dsonar.password=admin
+                      -Dsonar.token=YOUR_GENERATED_TOKEN
                 '''
             }
         }
