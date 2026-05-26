@@ -37,7 +37,7 @@ pipeline {
                       python manage.py migrate
 
                       pytest todos/tests.py \
-                        --ds=django_todo.settings \
+                        --ds=test_django_pro.settings
                         --junitxml=report.xml \
                         --cov=todos \
                         --cov-report=xml
