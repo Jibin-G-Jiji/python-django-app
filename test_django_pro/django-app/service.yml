@@ -3,6 +3,7 @@ kind: Service
 
 metadata:
 name: django-service
+namespace: default
 
 spec:
 type: NodePort
