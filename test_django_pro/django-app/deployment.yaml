@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: jibin321/django-app:v4
+          image: jibin321/django-app:f4d13f044db2e1aafd9bd8e6e09f18dd52dbfb34
 
           ports:
             - containerPort: 8000
