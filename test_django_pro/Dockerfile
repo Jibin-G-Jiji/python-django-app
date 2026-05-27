@@ -30,4 +30,4 @@ COPY . .
 EXPOSE 8000
 
 # Run migrations and start Gunicorn server
-CMD ["sh", "-c", "python manage.py migrate && gunicorn django_todo.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn test_django_pro.wsgi:application --bind 0.0.0.0:8000"]
