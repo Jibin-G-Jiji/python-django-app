@@ -1,27 +1,27 @@
+```yaml id="2"
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
-name: django-app
-namespace: default
+  name: django-app
+  namespace: default
 
 spec:
-replicas: 1
+  replicas: 1
 
-selector:
-matchLabels:
-app: django-app
+  selector:
+    matchLabels:
+      app: django-app
 
-template:
-metadata:
-labels:
-app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
 
-```
-spec:
-  containers:
-    - name: django-app
-      image: jibin321/django-app:v1
-      ports:
-        - containerPort: 8000
-```
+    spec:
+      containers:
+        - name: django-app
+          image: jibin321/django-app:v1
 
+          ports:
+            - containerPort: 8000
