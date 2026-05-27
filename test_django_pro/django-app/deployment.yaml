@@ -1,6 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
 name: django-app
 namespace: default
@@ -22,7 +21,7 @@ spec:
   containers:
     - name: django-app
       image: jibin321/django-app:v1
-
       ports:
         - containerPort: 8000
 ```
+
