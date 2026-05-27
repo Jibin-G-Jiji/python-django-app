@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: jibin321/django-app:v2
+          image: jibin321/django-app:v3
 
           ports:
             - containerPort: 8000
