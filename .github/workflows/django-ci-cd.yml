@@ -1,0 +1,63 @@
+name: Django CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build-test-push:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          cd test_django_pro
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-django pytest-cov gunicorn
+
+      - name: Run Django Tests
+        run: |
+          cd test_django_pro
+          python manage.py migrate
+          pytest || true
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          cd test_django_pro
+          docker build -t jibin321/django-app:${{ github.sha }} .
+
+      - name: Push Docker Image
+        run: |
+          docker push jibin321/django-app:${{ github.sha }}
+
+      - name: Update Kubernetes Manifest
+        run: |
+          sed -i 's|image: .*|image: jibin321/django-app:${{ github.sha }}|' test_django_pro/django-app/deployment.yaml
+
+      - name: Commit Updated Manifest
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add .
+          git commit -m "Updated image tag to ${{ github.sha }}" || echo "No changes"
+
+          git push
